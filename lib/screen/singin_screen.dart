@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:login_logout_with_firebase/screen/signup_screen.dart';
 import 'package:login_logout_with_firebase/utils/color_utils.dart';
@@ -86,10 +87,16 @@ class _SignInScreenState extends State<SignInScreen> {
                         primary: Colors.white,
                       ),
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context){
-                          return const SignUpScreen();
-                        }
-                        ));
+                        FirebaseAuth.instance.signInWithEmailAndPassword(
+                            email: _emailTextController.text,
+                            password: _passwordTextController.text).then((value){
+                              print("logout successfully");
+                          Navigator.push(context, MaterialPageRoute(builder: (context){
+                            return const SignUpScreen();
+                          }
+                          ));
+                        });
+
                       },
                       child: const Text('Sign Up'),
                     )
